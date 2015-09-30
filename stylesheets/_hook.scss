@@ -1,0 +1,37 @@
+$_hookscope: "" !global;
+$_hookmap: () !global;
+
+@mixin register-hook($hookname, $prevsel: null) {
+    @if $prevsel == null {
+        $_hookmap: map-deep-set($_hookmap, $hookname, #{&}) !global;
+    }
+    @else {
+        $result: replace-selector(inspect(#{&}), $prevsel, "annotion-sel");
+        $_hookmap: map-deep-set($_hookmap, $hookname, $result) !global;
+    }
+}
+
+@mixin hook-initiliaze() {
+    $_hookscope: #{&} !global;
+}
+@function get-hookscope() {
+    @return $_hookscope;
+}
+
+@function get-hook($hookname) {
+    @return map-deep-get($_hookmap, $hookname);
+}
+
+@mixin use-hook($hook-name, $scope: get-hookscope()) {
+    $pfx: #{&};
+    @at-root {
+        $pst: replace-selector(get-hook($hook-name), "annotion-sel", $scope);
+
+        @if $pst == null {
+            @error "hook #{$hook-name} doesn't exists";
+        }
+        #{$pst} {
+            @content;
+        }
+    }
+}

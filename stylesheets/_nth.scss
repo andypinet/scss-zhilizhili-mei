@@ -1,0 +1,71 @@
+@function get-even-num-under-anynum($num) {
+    $list: ();
+    $ele: 0;
+    @while $ele < $num + 1 {
+        @if $ele % 2 == 0 {
+            $list: append($list, $ele);
+        }
+        $ele: $ele + 1;
+    }
+    @return $list;
+}
+
+@function get-odd-num-under-anynum($num) {
+    $list: ();
+    $ele: 0;
+    @while $ele < $num + 1 {
+        @if $ele % 2 == 1 {
+            $list: append($list, $ele);
+        }
+        $ele: $ele + 1;
+    }
+    @return $list;
+}
+
+@mixin nth-child-shim($total) {
+    @include set-global-variables("nth-child-info/parentsel", #{&});
+    $_childtotalnum: $total !global;
+}
+
+@mixin nth-child($name) {
+    $parentsel: get-global-variables("nth-child-info/parentsel");
+    $cursel: #{&};
+    $chsel: str-replace($cursel, $parentsel, "");
+    $sel: str-trim($chsel);
+    @if $name == "even" {
+        $plist: get-odd-num-under-anynum($_childtotalnum);
+        $shsel: "";
+        $result: "";
+        @each $repeattime in $plist {
+            @if $repeattime != 0 {
+                $shsel: str-repeat("+#{$sel}", $repeattime);
+            }
+            $result: $result + ", " + $cursel + $shsel;
+        }
+        $result: str-slice($result, 2, str-length($result));
+        $result: str-trim($result);
+        @at-root  {
+            #{$result} {
+                @content;
+            }
+        }
+    }
+    @else if $name == odd {
+        $plist: get-even-num-under-anynum($_childtotalnum);
+        $shsel: "";
+        $result: "";
+        @each $repeattime in $plist {
+            @if $repeattime != 0 {
+                $shsel: str-repeat("+#{$sel}", $repeattime);
+            }
+            $result: $result + ", " + $cursel + $shsel;
+        }
+        $result: str-slice($result, 2, str-length($result));
+        $result: str-trim($result);
+        @at-root {
+            #{$result} {
+                @content;
+            }
+        }
+    }
+}

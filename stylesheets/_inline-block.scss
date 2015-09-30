@@ -1,0 +1,5 @@
+@mixin fix-inline-block() {
+    font-size:0;/* 所有浏览器 */
+    //letter-spacing:-5px;/* Safari 等不支持字体大小为 0 的浏览器 */
+    *letter-spacing:normal;
+}

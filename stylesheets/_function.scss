@@ -1,0 +1,25 @@
+@function get-color($colorname) {
+    @if function-exists(get-nipponcolor) {
+        @return get-nipponcolor($colorname);
+    }
+    @else {
+        @return null;
+    }
+}
+
+@function rem($val) {
+    @return #{$val}rem;
+}
+
+@function replace-selector($sel, $searchsel, $prevsel) {
+    @if type-of($prevsel) != "string" {
+        @error "`get-current-selector` function expecting a string for $prevsel; #{type-of($prevsel)} given.";
+    }
+
+    $result: str-replace($sel, $searchsel, #{$prevsel});
+    @return str-trim($result);
+}
+
+@function get-current-selector($prevsel) {
+    @return replace-selector(inspect(#{&}), $prevsel, "");
+}

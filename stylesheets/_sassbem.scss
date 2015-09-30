@@ -1,0 +1,45 @@
+@mixin set-module($sel) {
+    $_global-variables: map-deep-set($_global-variables, "module", set-namespace(#{$sel})) !global;
+    @content;
+}
+
+@function get-module() {
+    @return map-deep-get($_global-variables, "module");
+}
+
+/// Block Element
+/// @access public
+/// @param {String} $element - Element's name
+@mixin element($element) {
+    $modulename: get-module();
+    @if $modulename == null {
+        $modulename: #{&};
+    }
+    #{$modulename}__#{$element} {
+        @content;
+    }
+}
+
+/// Block Modifier
+/// @access public
+/// @param {String} $modifier - Modifier's name
+@mixin modifier($modifier) {
+    $modulename: get-module();
+    @if $modulename == null {
+        $modulename: #{&};
+    }
+    #{$modulename}--#{$modifier} {
+        @content;
+    }
+}
+
+$_current-selector: () !global;
+
+@mixin set-current-selector($path) {
+    $_current-selector: map-deep-set($_current-selector, $path, inspect(#{&})) !global;
+}
+
+@function get-current-selector($path) {
+    @return map-deep-get($_current-selector, $path);
+}
+

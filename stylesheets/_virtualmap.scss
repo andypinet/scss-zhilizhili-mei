@@ -1,0 +1,9 @@
+$vituralmap: () !global;
+
+@mixin register-vituralmap($vituralmapname) {
+    $vituralmap: map-deep-set($vituralmap, $vituralmapname, #{&});
+}
+
+@function get-virtualmap($vituralmapname) {
+    @return map-deep-get($vituralmap, $vituralmapname);
+}

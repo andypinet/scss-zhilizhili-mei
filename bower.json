@@ -1,0 +1,21 @@
+{
+  "name": "scss-lfx-mei",
+  "version": "0.2.0",
+  "homepage": "https://github.com/andypinet/mei",
+  "authors": [
+    "lingbaichao <lingbaichao@yingle.com>"
+  ],
+  "description": "sass ui lib",
+  "main": "stylesheets/mei.scss",
+  "keywords": [
+    "sass"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

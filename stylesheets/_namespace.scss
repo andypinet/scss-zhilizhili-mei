@@ -1,0 +1,24 @@
+$_namespace: "";
+
+@function set-namespace($sel, $alias: "\\", $joinsymbol: "-") {
+    $nsm: "";
+
+    @if $_namespace != "" {
+        $nsm: $_namespace + $joinsymbol;
+    }
+    @return str-replace($sel, $alias, $nsm);
+}
+
+@function get-namesapce($sel: "") {
+    @return $_namespace;
+}
+
+@mixin namespace() {
+    $sel: set-namespace(#{&});
+    @at-root {
+        #{$sel} {
+            @content;
+        }
+    }
+}
+

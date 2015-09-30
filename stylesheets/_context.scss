@@ -1,0 +1,9 @@
+$_global-variables: ();
+
+@mixin set-global-variables($path, $val) {
+    $_global-variables: map-deep-set($_global-variables, $path, $val) !global;
+}
+
+@function get-global-variables($path) {
+    @return map-deep-get($_global-variables, $path);
+}

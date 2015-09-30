@@ -1,0 +1,18 @@
+$_setting: ();
+
+@mixin set-setting($path, $value) {
+    $_setting: map-deep-set($_setting, $path, $value) !global;
+}
+
+@function get-setting($path) {
+    @return map-deep-get($_setting, $path);
+}
+
+@function using($config, $name) {
+    @if $config == null {
+        @return null;
+    }
+    @else {
+        @return map-deep-get($config, $name);
+    }
+}
