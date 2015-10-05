@@ -1,0 +1,40 @@
+@import "../bower_components/true/sass/true";
+@import "../bower_components/sassstd/src/sassstd";
+@import "../stylesheets/mei";
+
+.test {
+    $self: #{&};
+    &__children {
+        @include register-hook("test__children");
+    }
+}
+
+.use {
+    $self: #{&};
+    @include use-hook("test__children", $prepend: $self) {
+        $global-input: #{&} !global;
+    }
+}
+
+@include test-module('hook') {
+
+    // Testing Functions
+    @include test('register and get') {
+        $input: get-hook("test__children");
+        $expect: unquote(".test__children");
+
+        @include assert-equal($input, $expect,
+                'Returns the sum of two selectors');
+    }
+
+    // Testing Functions
+    @include test('use') {
+        $input: $global-input;
+        $expect: unquote(".use .test__children");
+
+        @include assert-equal($input, $expect,
+                'Returns the sum of two selectors');
+    }
+}
+
+@include report;

@@ -17,5 +17,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "true": "~2.0.2",
+    "sassstd": "scss-lfx-sassstd#~0.2.0"
+  }
 }

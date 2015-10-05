@@ -22,10 +22,14 @@ $_hookmap: () !global;
     @return map-deep-get($_hookmap, $hookname);
 }
 
-@mixin use-hook($hook-name, $scope: get-hookscope()) {
+@mixin use-hook($hook-name, $scope: get-hookscope(), $prepend: null) {
     $pfx: #{&};
     @at-root {
         $pst: replace-selector(get-hook($hook-name), "annotion-sel", $scope);
+
+        @if $prepend != null {
+            $pst: selector-nest($prepend, $pst);
+        }
 
         @if $pst == null {
             @error "hook #{$hook-name} doesn't exists";

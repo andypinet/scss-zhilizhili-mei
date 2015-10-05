@@ -1,0 +1,2 @@
+tests:
+	gulp build-css
